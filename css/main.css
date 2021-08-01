@@ -160,6 +160,10 @@ section {
   position: relative;
 }
 
+.featured img {
+  border-radius: 1em;
+}
+
 .featured::before {
   content: "";
   position: absolute;

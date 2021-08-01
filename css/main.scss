@@ -140,6 +140,10 @@ section {
 
 .featured {
   position: relative;
+
+  img {
+    border-radius: 1em;
+  }
 }
 
 .featured::before {
