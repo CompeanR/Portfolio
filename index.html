@@ -135,58 +135,21 @@
             <a href="https://compeanr.github.io/Public-API-Requests/" target="_blank"><img src="images/employeeDirectory.jpg" alt="Employee Directory"></a>
         </div>
 
+        <div class="portfolio-container transition3">
+            <div class="portfolio-left">
+                <div class="inner">
+                    <p class="subtitle">Web Library App</p>
+                    <p class="featured-title">Library Book</p>
+                    <p class="-featured-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique esse tempore rerum omnis, beatae aliquid perferendis laboriosam, in atque doloremque ut. Fugiat quas consequuntur modi animi? Iste quaerat reprehenderit sapiente?</p>
+                </div>
+            </div>
+            <a href="https://library-books-app.herokuapp.com/books" target="_blank"><img src="images/libraryapp_adobespark (1).png" alt="Employee Directory"></a>
+        </div>
+
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js" integrity="sha512-UxP+UhJaGRWuMG2YC6LPWYpFQnsSgnor0VUF3BHdD83PS/pOpN+FYbZmrYN+ISX8jnvgVUciqP/fILOXDjZSwg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js" integrity="sha512-DlTk2PLUinhBupE89kHOJTt11QqbRMQVlbb26XVDvp4D1kt0fRvQJslvZnTelRJHq6yK0tIPCR7cul8+9Blz0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
-        var tl = gsap.timeline();
-
-        tl.from('.content', {
-            y: '-30%',
-            opacity: 0,
-            duration: 2,
-            ease: Power4.easeOut
-        })
-
-        tl.from('.stagger1', {
-            opacity: 0,
-            y: 50,
-            stagger: .3,
-            ease: Power4.easeOut,
-            duration: 2
-        }, '-=1.5')
-
-        gsap.from('.about', {
-            y: '50%',
-            opacity: 0,
-            duration: 2,
-            stagger: .3
-        })
-
-        gsap.from('.transition2', {
-            scrollTrigger: {
-                trigger: '.transition2',
-                start: 'top bottom'
-            },
-            y: '50%',
-            opacity: 0,
-            duration: 1.2,
-            stagger: .3
-        })
-
-        gsap.from('.transition3', {
-            scrollTrigger: {
-                trigger: '.transition3',
-                start: 'top center'
-            },
-            y: '50%',
-            opacity: 0,
-            duration: 1.2,
-            stagger: .6
-        })
-    </script>
+    <script src='./javascript/animations.js'></script>
 </body>
 </html>
