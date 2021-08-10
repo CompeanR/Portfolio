@@ -3,6 +3,7 @@ body {
   height: 100vh;
   margin: 0;
   font-family: "Poppins";
+  background: #f7f7f7;
 }
 
 ul {
@@ -26,6 +27,10 @@ img {
 section {
   padding: 4em 2em;
   text-align: center;
+}
+
+label {
+  display: none;
 }
 
 .nav-container {
@@ -213,6 +218,57 @@ section {
   margin-bottom: 2em;
 }
 
+.contact-section {
+  background: #f7f7f7;
+  margin-top: -7.5em;
+}
+
+.contact-section .container h2 {
+  margin-bottom: 1em;
+}
+
+.contact-section .container input, .contact-section .container textarea {
+  width: 100%;
+  padding: 0.8em;
+  margin-bottom: 1em;
+  border-radius: 0.3em;
+  border: 1px solid gray;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.contact-section .container input[type="submit"] {
+  background-color: #206aba;
+  color: #f7f7f7;
+  font-weight: bold;
+  font-size: 1.3em;
+  border: none;
+  margin-top: 2em;
+  margin-bottom: 5em;
+  border-radius: 5em;
+  display: inline-block;
+  padding: 0.8em 2em;
+  width: unset;
+  cursor: pointer;
+}
+
+.contact-section .container .name, .contact-section .container .email, .contact-section .container .company, .contact-section .container .subject {
+  margin-bottom: .3em;
+}
+
+.contact-section .container .field {
+  margin-top: 1em;
+}
+
+.contact-section .container label {
+  font-weight: bold;
+}
+
+.contact-section .container textarea {
+  margin-top: 1em;
+  height: 20em;
+}
+
 @media only screen and (min-width: 800px) {
   .hero img {
     width: 25%;
@@ -252,15 +308,55 @@ section {
   }
   .portfolio {
     padding-top: 7em;
+    margin-bottom: 2em;
   }
   .portfolio-container img {
     margin-left: 2em;
+  }
+  .contact-section .container h2 {
+    margin-bottom: 1.5em;
+  }
+  .contact-section .fields {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .contact-section .fields .name, .contact-section .fields .email, .contact-section .fields .company, .contact-section .fields .subject {
+    padding-bottom: 2em;
+    -ms-flex-preferred-size: 49%;
+        flex-basis: 49%;
+  }
+  .contact-section .fields .field {
+    -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+    margin: auto;
+    padding-top: .5em;
+    font-weight: bold;
+  }
+  .contact-section .fields .field textarea {
+    margin-top: 1.5em;
+    height: unset;
+  }
+  .contact-section .fields input {
+    margin: auto;
   }
 }
 
 @media only screen and (min-width: 1050px) {
   .hero {
     height: 90vh;
+  }
+  section {
+    padding: 4em;
   }
   .nav-container {
     display: -ms-grid;
@@ -273,12 +369,10 @@ section {
     background: #15467a;
     padding: 2em 2em 2em 4em;
   }
-  section {
-    padding: 4em;
-  }
   .social-header {
     display: block;
-    padding: 2em 4em 2em 0;
+    margin: auto;
+    text-align: center;
   }
   .social-header ul {
     display: -webkit-box;
@@ -318,7 +412,7 @@ section {
     margin-top: 1em;
   }
   .hero img {
-    width: 40%;
+    width: 50%;
     margin: unset;
     margin: 0 auto;
   }
@@ -333,6 +427,62 @@ section {
     color: black;
     padding: 0 1em;
   }
+  .contact-section h2 {
+    margin-bottom: 1.5em;
+  }
+  .contact-section .fields {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 3fr;
+        grid-template-columns: 1fr 3fr;
+    -ms-grid-rows: 6.42em 6.42em 6.42em 6.42em 1fr;
+        grid-template-rows: 6.42em 6.42em 6.42em 6.42em 1fr;
+        grid-template-areas: 'name  message' 'email  message' 'company  message' 'subject message' 'input  input';
+  }
+  .contact-section .fields .name {
+    -ms-grid-row: 1;
+    -ms-grid-column: 1;
+    grid-area: name;
+  }
+  .contact-section .fields .email {
+    -ms-grid-row: 2;
+    -ms-grid-column: 1;
+    grid-area: email;
+  }
+  .contact-section .fields .company {
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+    grid-area: company;
+  }
+  .contact-section .fields .subject {
+    -ms-grid-row: 4;
+    -ms-grid-column: 1;
+    grid-area: subject;
+  }
+  .contact-section .fields .field {
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 4;
+    -ms-grid-column: 2;
+    grid-area: message;
+    width: 100%;
+    margin-left: 2em;
+    margin-top: .18em;
+  }
+  .contact-section .fields input {
+    -ms-grid-row: 5;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 2;
+    grid-area: input;
+  }
+  .contact-section .fields label {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: left;
+        -ms-flex-pack: left;
+            justify-content: left;
+    margin-bottom: .5em;
+  }
 }
 
 @media only screen and (min-width: 1250px) {
@@ -340,13 +490,16 @@ section {
     padding: 2em 2em 2em 10em;
   }
   .social-header {
-    padding: 2em 10em 2em 0;
+    margin: auto;
   }
   section {
     padding: 10em 10em 4em 10em;
   }
   .hero .content {
     padding: 6em 8em 6em 10em;
+  }
+  .portfolio {
+    margin-bottom: -13em;
   }
 }
 
@@ -355,6 +508,7 @@ section {
     padding: 2em 2em 2em 20em;
   }
   .social-header {
+    margin: unset;
     padding: 2em 3em 2em 0;
   }
   section {
@@ -362,6 +516,9 @@ section {
   }
   .hero .content {
     padding: 9em 20em 6em 20em;
+  }
+  .contact-section {
+    margin-top: 5em;
   }
 }
 
