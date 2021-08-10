@@ -52,7 +52,7 @@ gsap.from('.transition4', {
     },
     y: '50%',
     opacity: 0,
-    duration: 1.2,
+    duration: 1.6,
     stagger: .6
 })
 
@@ -63,6 +63,6 @@ gsap.from('.transition5', {
     },
     y: '20%',
     opacity: 0,
-    duration: 1.2,
+    duration: 1.6,
     stagger: .6
 })
