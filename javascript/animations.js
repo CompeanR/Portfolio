@@ -52,17 +52,17 @@ gsap.from('.transition4', {
     },
     y: '50%',
     opacity: 0,
-    duration: 1.6,
+    duration: 1.2,
     stagger: .6
 })
 
 gsap.from('.transition5', {
     scrollTrigger: {
-        trigger: '.transition5',
+        trigger: '.transition4',
         start: 'top bottom'
     },
-    y: '50%',
+    y: '20%',
     opacity: 0,
-    duration: 1.6,
+    duration: 1.2,
     stagger: .6
 })
