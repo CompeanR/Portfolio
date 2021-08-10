@@ -273,7 +273,7 @@ label {
 .footer {
   background: #f7f7f7;
   overflow: auto;
-  padding: 1em 0;
+  padding: 1.5em 0;
 }
 
 .footer ul {
@@ -299,9 +299,6 @@ label {
 }
 
 @media only screen and (min-width: 800px) {
-  .footer {
-    display: none;
-  }
   .hero img {
     width: 25%;
   }
@@ -384,6 +381,9 @@ label {
 }
 
 @media only screen and (min-width: 1050px) {
+  .footer {
+    display: none;
+  }
   .hero {
     height: 90vh;
   }
