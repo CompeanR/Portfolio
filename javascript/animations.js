@@ -55,3 +55,14 @@ gsap.from('.transition4', {
     duration: 1.6,
     stagger: .6
 })
+
+gsap.from('.transition5', {
+    scrollTrigger: {
+        trigger: '.transition5',
+        start: 'top bottom'
+    },
+    y: '50%',
+    opacity: 0,
+    duration: 1.6,
+    stagger: .6
+})

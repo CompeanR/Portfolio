@@ -202,7 +202,8 @@ label {
 
 .contact-section {
   background: #f7f7f7;
-  margin-top: -7.5em;
+  margin-top: -5.5em;
+  padding-bottom: unset;
 
   .container {
 
@@ -220,7 +221,7 @@ label {
     }
 
     input[type="submit"] {
-      background-color: #206aba;
+      background-color: black;
       color: #f7f7f7;
       font-weight: bold;
       font-size: 1.3em;
@@ -253,7 +254,36 @@ label {
   }
 }
 
+.footer {
+  background: #f7f7f7;
+  overflow: auto;
+  padding: 1em 0;
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    width: 7em;
+    float: right;
+    margin-right: .7em;
+    
+    img {
+      width: 20px;
+    }
+  }
+
+  a {
+    color: black;
+    font-weight: bold;
+    margin-left: .7em;
+  }
+}
+
+
 @media only screen and (min-width: 800px) {
+
+  .footer {
+    display: none;
+  }
 
   .hero {
     img {

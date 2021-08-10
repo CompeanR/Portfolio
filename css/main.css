@@ -220,7 +220,8 @@ label {
 
 .contact-section {
   background: #f7f7f7;
-  margin-top: -7.5em;
+  margin-top: -5.5em;
+  padding-bottom: unset;
 }
 
 .contact-section .container h2 {
@@ -238,7 +239,7 @@ label {
 }
 
 .contact-section .container input[type="submit"] {
-  background-color: #206aba;
+  background-color: black;
   color: #f7f7f7;
   font-weight: bold;
   font-size: 1.3em;
@@ -269,7 +270,38 @@ label {
   height: 20em;
 }
 
+.footer {
+  background: #f7f7f7;
+  overflow: auto;
+  padding: 1em 0;
+}
+
+.footer ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 7em;
+  float: right;
+  margin-right: .7em;
+}
+
+.footer ul img {
+  width: 20px;
+}
+
+.footer a {
+  color: black;
+  font-weight: bold;
+  margin-left: .7em;
+}
+
 @media only screen and (min-width: 800px) {
+  .footer {
+    display: none;
+  }
   .hero img {
     width: 25%;
   }
