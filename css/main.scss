@@ -127,13 +127,13 @@ label {
       margin: 0 auto;
 
       &.one {
-        width: 50px;
+        width: 150px;
       }
       &.two {
-        width: 100px;
+        width: 95px;
       }
       &.three {
-        width: 60px;
+        width: 70px;
       }
     }
 
@@ -468,7 +468,7 @@ label {
     .fields {
       display: grid;
       grid-template-columns: 1fr 3fr;
-      grid-template-rows: 6.42em 6.42em 6.42em 6.42em 1fr;
+      grid-template-rows: 6.5em 6.5em 6.5em 6.5em 1fr;
       grid-template-areas: 
       'name  message'
       'email  message'
