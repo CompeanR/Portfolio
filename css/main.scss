@@ -127,7 +127,7 @@ label {
       margin: 0 auto;
 
       &.one {
-        width: 45%;
+        width: 60%;
       }
       &.two {
         width: 95px;
@@ -455,6 +455,16 @@ label {
       p {
         color: black;
         padding: 0 1em;
+      }
+    }
+  }
+
+  .skills {
+  
+    .skills-container ul li .icon-container {
+  
+      &.one {
+        width: 43%;
       }
     }
   }
