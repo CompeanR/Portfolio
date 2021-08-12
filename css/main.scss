@@ -233,6 +233,9 @@ label {
       padding: 0.8em 2em;
       width: unset;
       cursor: pointer;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
 
     .name, .email, .company, .subject {
