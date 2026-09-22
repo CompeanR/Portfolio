@@ -71,6 +71,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 .topbar, .hero-copy { position: relative; z-index: 1; }
+.shore-bottom { position: absolute; left: 0; bottom: -1px; width: 100%; height: clamp(60px, 9vw, 140px); display: block; z-index: 1; }
 
 .topbar {
   display: flex;
