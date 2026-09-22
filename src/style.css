@@ -251,3 +251,14 @@ body { position: relative; }
 @media (prefers-reduced-motion: reduce) {
   .surfer-bob { animation: none; }
 }
+
+.phone-raw {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+  aspect-ratio: auto;
+  filter: drop-shadow(0 30px 40px rgba(12, 42, 51, 0.3));
+}
+.phone-raw img { height: auto; border-radius: 0; mix-blend-mode: multiply; }
