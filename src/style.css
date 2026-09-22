@@ -43,7 +43,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 .hero {
   position: relative;
-  z-index: 1;
+  z-index: 0;
   min-height: min(100svh, 1080px);
   display: grid;
   grid-template-rows: auto 1fr;
@@ -88,7 +88,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 .hero-copy {
   align-self: end;
-  padding: 0 var(--gutter) clamp(48px, 9vh, 110px);
+  padding: 0 var(--gutter) calc(clamp(48px, 9vh, 110px) + clamp(70px, 9vw, 140px) * 0.6);
 }
 .hero-copy h1 {
   font-size: clamp(38px, 6.2vw, 92px);
@@ -104,7 +104,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   opacity: 0.92;
 }
 
-main { padding: 0 var(--gutter); position: relative; z-index: 1; }
+main { padding: 0 var(--gutter); position: relative; z-index: 2; }
 
 section { padding: clamp(72px, 10vw, 140px) 0; border-top: 1px solid var(--line); }
 section:first-child { border-top: 0; }
@@ -329,7 +329,7 @@ body { position: relative; }
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -339,7 +339,7 @@ body { position: relative; }
   left: 0;
   width: 180px;
   height: 130px;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
   opacity: 0;
   transform-origin: 50% 70%;
