@@ -10,7 +10,7 @@ if (canvas && wantsMotion && isWide) {
     mountScene(canvas);
     canvas.classList.add("is-live");
     if (sea) {
-      mountScene(sea, { mood: "sunset" });
+      mountScene(sea, { mood: "dusk" });
       sea.classList.add("is-live");
     }
   });
@@ -23,7 +23,6 @@ document.querySelector<HTMLAnchorElement>("[data-email]")?.addEventListener("cli
   a.href = `mailto:${user}@${host}`;
 });
 
-document.querySelector("#year")!.textContent = String(new Date().getFullYear());
 
 import { renderSkills } from "./skills";
 renderSkills(document.querySelector("#skill-strip")!);

@@ -88,14 +88,15 @@ type Mood = {
   sunZ: number;
   sunRadius: number;
   amp: number;
+  showSun: boolean;
 };
 
-const moods: Record<"day" | "sunset", Mood> = {
-  day: { deep: "#0b4558", shallow: "#3a8ea1", foam: "#d8e6e2", sky: "#0f4b5e", sun: "#f2a63a", halo: "#c8541e", sunZ: 3, sunRadius: 1.6, amp: 1 },
-  sunset: { deep: "#2a3f52", shallow: "#b8745a", foam: "#f4d3b0", sky: "#d9814f", sun: "#f7b449", halo: "#e0603a", sunZ: 0.4, sunRadius: 2.4, amp: 0.55 },
+const moods: Record<"day" | "dusk", Mood> = {
+  day: { deep: "#0b4558", shallow: "#3a8ea1", foam: "#d8e6e2", sky: "#0f4b5e", sun: "#f2a63a", halo: "#c8541e", sunZ: 3, sunRadius: 1.6, amp: 1, showSun: true },
+  dusk: { deep: "#0b4558", shallow: "#3a8ea1", foam: "#d8e6e2", sky: "#0f4b5e", sun: "#f2a63a", halo: "#c8541e", sunZ: 3, sunRadius: 1.6, amp: 0.7, showSun: false },
 };
 
-export function mountScene(canvas: HTMLCanvasElement, opts: { mood?: "day" | "sunset" } = {}): () => void {
+export function mountScene(canvas: HTMLCanvasElement, opts: { mood?: "day" | "dusk" } = {}): () => void {
   const mood = moods[opts.mood ?? "day"];
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
@@ -124,33 +125,35 @@ export function mountScene(canvas: HTMLCanvasElement, opts: { mood?: "day" | "su
   );
   scene.add(water);
 
-  const sun = new THREE.Mesh(
-    new THREE.CircleGeometry(mood.sunRadius, 64),
-    new THREE.MeshBasicMaterial({ color: mood.sun }),
-  );
-  sun.position.set(5.5, 14, mood.sunZ);
-  sun.lookAt(camera.position);
-  scene.add(sun);
+  if (mood.showSun) {
+    const sun = new THREE.Mesh(
+      new THREE.CircleGeometry(mood.sunRadius, 64),
+      new THREE.MeshBasicMaterial({ color: mood.sun }),
+    );
+    sun.position.set(5.5, 14, mood.sunZ);
+    sun.lookAt(camera.position);
+    scene.add(sun);
 
-  const haloCanvas = document.createElement("canvas");
-  haloCanvas.width = haloCanvas.height = 256;
-  const ctx = haloCanvas.getContext("2d")!;
-  const grad = ctx.createRadialGradient(128, 128, 40, 128, 128, 128);
-  const sunRgb = new THREE.Color(mood.sun);
-  const haloRgb = new THREE.Color(mood.halo);
-  const rgb = (c: THREE.Color, a: number) => `rgba(${Math.round(c.r * 255)}, ${Math.round(c.g * 255)}, ${Math.round(c.b * 255)}, ${a})`;
-  grad.addColorStop(0, rgb(sunRgb, 0.55));
-  grad.addColorStop(0.5, rgb(haloRgb, 0.18));
-  grad.addColorStop(1, rgb(haloRgb, 0));
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, 256, 256);
-  const halo = new THREE.Sprite(
-    new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(haloCanvas), transparent: true, depthWrite: false, depthTest: false }),
-  );
-  halo.scale.setScalar(mood.sunRadius * 5.6);
-  halo.renderOrder = 1;
-  halo.position.copy(sun.position);
-  scene.add(halo);
+    const haloCanvas = document.createElement("canvas");
+    haloCanvas.width = haloCanvas.height = 256;
+    const ctx = haloCanvas.getContext("2d")!;
+    const grad = ctx.createRadialGradient(128, 128, 40, 128, 128, 128);
+    const sunRgb = new THREE.Color(mood.sun);
+    const haloRgb = new THREE.Color(mood.halo);
+    const rgb = (c: THREE.Color, a: number) => `rgba(${Math.round(c.r * 255)}, ${Math.round(c.g * 255)}, ${Math.round(c.b * 255)}, ${a})`;
+    grad.addColorStop(0, rgb(sunRgb, 0.55));
+    grad.addColorStop(0.5, rgb(haloRgb, 0.18));
+    grad.addColorStop(1, rgb(haloRgb, 0));
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 256, 256);
+    const halo = new THREE.Sprite(
+      new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(haloCanvas), transparent: true, depthWrite: false, depthTest: false }),
+    );
+    halo.scale.setScalar(mood.sunRadius * 5.6);
+    halo.renderOrder = 1;
+    halo.position.copy(sun.position);
+    scene.add(halo);
+  }
 
   const raycaster = new THREE.Raycaster();
   const ndc = new THREE.Vector2(2, 2);

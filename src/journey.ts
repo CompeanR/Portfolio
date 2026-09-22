@@ -146,7 +146,8 @@ export function mountJourney(highlights: HTMLElement[], hero: HTMLElement, exitA
     });
     const heroBottom = docY(hero) + hero.getBoundingClientRect().height;
     const exitTop = docY(exitAnchor);
-    endScroll = exitTop - vh * 0.1;
+    const maxScroll = document.documentElement.scrollHeight - vh;
+    endScroll = Math.min(exitTop - vh * 0.1, maxScroll - 40);
     const points: Waypoint[] = [
       { x: vw * 0.62, y: heroBottom - 60 },
       { x: docks[0].x + 40, y: heroBottom + (docks[0].y - heroBottom) * 0.35 },
