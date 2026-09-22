@@ -150,12 +150,12 @@ export function mountJourney(highlights: HTMLElement[], hero: HTMLElement, exitA
     endScroll = Math.min(exitTop - vh * 0.1, maxScroll - 40);
     const points: Waypoint[] = [
       { x: vw * 0.6, y: heroBottom - 40 },
-      { x: vw * 0.42, y: heroBottom + 60 },
+      { x: vw * 0.56, y: heroBottom + 230 },
     ];
     docks.forEach((d, i) => {
       const flipped = highlights[i].classList.contains("highlight-flip");
       const side = flipped ? -1 : 1;
-      points.push({ x: d.x - side * 10, y: i === 0 ? Math.max(d.y - 240, heroBottom + 80) : d.y - 240 });
+      if (i > 0) points.push({ x: d.x - side * 10, y: d.y - 240 });
       points.push(d);
       points.push({ x: d.x + side * 70, y: d.y + 300 });
       const next = docks[i + 1];
