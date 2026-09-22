@@ -4,10 +4,15 @@ const canvas = document.querySelector<HTMLCanvasElement>("#scene");
 const wantsMotion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isWide = window.matchMedia("(min-width: 768px)").matches;
 
+const sea = document.querySelector<HTMLCanvasElement>("#sea");
 if (canvas && wantsMotion && isWide) {
   import("./scene").then(({ mountScene }) => {
     mountScene(canvas);
     canvas.classList.add("is-live");
+    if (sea) {
+      mountScene(sea, { sunset: true });
+      sea.classList.add("is-live");
+    }
   });
 }
 
@@ -24,9 +29,10 @@ import { renderSkills } from "./skills";
 renderSkills(document.querySelector("#skill-strip")!);
 
 if (wantsMotion && window.matchMedia("(min-width: 860px)").matches) {
-  import("./surfer").then(({ mountSurfer }) => {
+  import("./journey").then(({ mountJourney }) => {
     const highlights = Array.from(document.querySelectorAll<HTMLElement>(".highlight"));
-    const archive = document.querySelector<HTMLElement>(".archive")!;
-    mountSurfer(highlights, archive);
+    const hero = document.querySelector<HTMLElement>(".hero")!;
+    const contact = document.querySelector<HTMLElement>("#contact")!;
+    mountJourney(highlights, hero, contact);
   });
 }

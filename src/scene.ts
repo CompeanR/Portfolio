@@ -77,7 +77,7 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-export function mountScene(canvas: HTMLCanvasElement): () => void {
+export function mountScene(canvas: HTMLCanvasElement, opts: { sunset?: boolean } = {}): () => void {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
 
@@ -94,7 +94,7 @@ export function mountScene(canvas: HTMLCanvasElement): () => void {
     uFoam: { value: new THREE.Color("#d8e6e2") },
     uSky: { value: new THREE.Color("#0f4b5e") },
     uSun: { value: new THREE.Color("#f2a63a") },
-    uSunPos: { value: new THREE.Vector3(5.5, 14, 3) },
+    uSunPos: { value: new THREE.Vector3(5.5, 14, opts.sunset ? 1.2 : 3) },
     uCamPos: { value: camera.position },
   };
 
@@ -108,7 +108,7 @@ export function mountScene(canvas: HTMLCanvasElement): () => void {
     new THREE.CircleGeometry(1.6, 64),
     new THREE.MeshBasicMaterial({ color: "#f2a63a" }),
   );
-  sun.position.set(5.5, 14, 3);
+  sun.position.set(5.5, 14, opts.sunset ? 1.2 : 3);
   sun.lookAt(camera.position);
   scene.add(sun);
 
@@ -155,10 +155,15 @@ export function mountScene(canvas: HTMLCanvasElement): () => void {
   window.addEventListener("resize", resize);
   resize();
 
-  const clock = new THREE.Clock();
+  const t0 = performance.now();
   let raf = 0;
+  let visible = true;
   const tick = () => {
-    uniforms.uTime.value = clock.getElapsedTime();
+    if (!visible) {
+      raf = 0;
+      return;
+    }
+    uniforms.uTime.value = (performance.now() - t0) / 1000;
     uniforms.uPointer.value.lerp(targetPointer, 0.08);
     camera.position.x += (targetTilt.x * 0.6 - camera.position.x) * 0.04;
     camera.position.z += (4.2 + targetTilt.y * 0.35 - camera.position.z) * 0.04;
@@ -167,8 +172,14 @@ export function mountScene(canvas: HTMLCanvasElement): () => void {
     raf = requestAnimationFrame(tick);
   };
   tick();
+  const io = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible && !raf) raf = requestAnimationFrame(tick);
+  });
+  io.observe(canvas);
 
   return () => {
+    io.disconnect();
     cancelAnimationFrame(raf);
     window.removeEventListener("pointermove", onMove);
     window.removeEventListener("pointerleave", onLeave);
