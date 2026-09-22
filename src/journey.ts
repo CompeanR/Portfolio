@@ -162,7 +162,7 @@ export function mountJourney(highlights: HTMLElement[], hero: HTMLElement, exitA
       if (next) points.push({ x: vw * 0.5, y: (d.y + 300 + next.y - 240) / 2 });
     });
     points.push({ x: vw * 0.9, y: (docks[docks.length - 1].y + 300 + exitTop) / 2 });
-    points.push({ x: vw * 0.86, y: exitTop + vh * 0.55 });
+    points.push({ x: vw * 0.84, y: exitTop + vh * 0.75 });
     curve = new THREE.CatmullRomCurve3(points.map((p) => new THREE.Vector3(p.x, -p.y, 0)), false, "centripetal");
     buildRibbon();
     const spaced = curve.getSpacedPoints(600);

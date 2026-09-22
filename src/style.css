@@ -251,7 +251,7 @@ h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px);
 
 .contact {
   position: relative;
-  margin: 0 calc(-1 * var(--gutter));
+  z-index: 0;
   padding: 200px var(--gutter) 120px;
   border-top: 0;
   color: var(--sand);
