@@ -10,7 +10,7 @@ if (canvas && wantsMotion && isWide) {
     mountScene(canvas);
     canvas.classList.add("is-live");
     if (sea) {
-      mountScene(sea, { sunset: true });
+      mountScene(sea, { mood: "sunset" });
       sea.classList.add("is-live");
     }
   });

@@ -2,6 +2,7 @@ import * as THREE from "three";
 
 const vertexShader = /* glsl */ `
   uniform float uTime;
+  uniform float uAmp;
   uniform vec2 uPointer;
   varying float vHeight;
   varying vec3 vNormal;
@@ -26,7 +27,7 @@ const vertexShader = /* glsl */ `
     float ripple = noise(p * 0.9 + t) * 0.32 + noise(p * 2.2 - t * 0.7) * 0.12 + noise(p * 5.0 + t * 1.3) * 0.04;
     float d = distance(p, uPointer);
     float touch = exp(-d * d * 0.12) * 0.45;
-    return swell + ripple + touch;
+    return (swell + ripple) * uAmp + touch;
   }
 
   void main() {
@@ -77,7 +78,25 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-export function mountScene(canvas: HTMLCanvasElement, opts: { sunset?: boolean } = {}): () => void {
+type Mood = {
+  deep: string;
+  shallow: string;
+  foam: string;
+  sky: string;
+  sun: string;
+  halo: string;
+  sunZ: number;
+  sunRadius: number;
+  amp: number;
+};
+
+const moods: Record<"day" | "sunset", Mood> = {
+  day: { deep: "#0b4558", shallow: "#3a8ea1", foam: "#d8e6e2", sky: "#0f4b5e", sun: "#f2a63a", halo: "#c8541e", sunZ: 3, sunRadius: 1.6, amp: 1 },
+  sunset: { deep: "#2a3f52", shallow: "#b8745a", foam: "#f4d3b0", sky: "#d9814f", sun: "#f7b449", halo: "#e0603a", sunZ: 0.4, sunRadius: 2.4, amp: 0.55 },
+};
+
+export function mountScene(canvas: HTMLCanvasElement, opts: { mood?: "day" | "sunset" } = {}): () => void {
+  const mood = moods[opts.mood ?? "day"];
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
 
@@ -88,13 +107,14 @@ export function mountScene(canvas: HTMLCanvasElement, opts: { sunset?: boolean }
 
   const uniforms = {
     uTime: { value: 0 },
+    uAmp: { value: mood.amp },
     uPointer: { value: new THREE.Vector2(40, 40) },
-    uDeep: { value: new THREE.Color("#0b4558") },
-    uShallow: { value: new THREE.Color("#3a8ea1") },
-    uFoam: { value: new THREE.Color("#d8e6e2") },
-    uSky: { value: new THREE.Color("#0f4b5e") },
-    uSun: { value: new THREE.Color("#f2a63a") },
-    uSunPos: { value: new THREE.Vector3(5.5, 14, opts.sunset ? 1.2 : 3) },
+    uDeep: { value: new THREE.Color(mood.deep) },
+    uShallow: { value: new THREE.Color(mood.shallow) },
+    uFoam: { value: new THREE.Color(mood.foam) },
+    uSky: { value: new THREE.Color(mood.sky) },
+    uSun: { value: new THREE.Color(mood.sun) },
+    uSunPos: { value: new THREE.Vector3(5.5, 14, mood.sunZ) },
     uCamPos: { value: camera.position },
   };
 
@@ -105,10 +125,10 @@ export function mountScene(canvas: HTMLCanvasElement, opts: { sunset?: boolean }
   scene.add(water);
 
   const sun = new THREE.Mesh(
-    new THREE.CircleGeometry(1.6, 64),
-    new THREE.MeshBasicMaterial({ color: "#f2a63a" }),
+    new THREE.CircleGeometry(mood.sunRadius, 64),
+    new THREE.MeshBasicMaterial({ color: mood.sun }),
   );
-  sun.position.set(5.5, 14, opts.sunset ? 1.2 : 3);
+  sun.position.set(5.5, 14, mood.sunZ);
   sun.lookAt(camera.position);
   scene.add(sun);
 
@@ -116,15 +136,18 @@ export function mountScene(canvas: HTMLCanvasElement, opts: { sunset?: boolean }
   haloCanvas.width = haloCanvas.height = 256;
   const ctx = haloCanvas.getContext("2d")!;
   const grad = ctx.createRadialGradient(128, 128, 40, 128, 128, 128);
-  grad.addColorStop(0, "rgba(242, 166, 58, 0.55)");
-  grad.addColorStop(0.5, "rgba(200, 84, 30, 0.18)");
-  grad.addColorStop(1, "rgba(200, 84, 30, 0)");
+  const sunRgb = new THREE.Color(mood.sun);
+  const haloRgb = new THREE.Color(mood.halo);
+  const rgb = (c: THREE.Color, a: number) => `rgba(${Math.round(c.r * 255)}, ${Math.round(c.g * 255)}, ${Math.round(c.b * 255)}, ${a})`;
+  grad.addColorStop(0, rgb(sunRgb, 0.55));
+  grad.addColorStop(0.5, rgb(haloRgb, 0.18));
+  grad.addColorStop(1, rgb(haloRgb, 0));
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, 256, 256);
   const halo = new THREE.Sprite(
     new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(haloCanvas), transparent: true, depthWrite: false, depthTest: false }),
   );
-  halo.scale.setScalar(9);
+  halo.scale.setScalar(mood.sunRadius * 5.6);
   halo.renderOrder = 1;
   halo.position.copy(sun.position);
   scene.add(halo);
