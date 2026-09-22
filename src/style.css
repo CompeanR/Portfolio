@@ -227,3 +227,27 @@ footer {
   html { scroll-behavior: auto; }
   #scene { transition: none; }
 }
+
+body { position: relative; }
+
+.surfer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 130px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: 50% 70%;
+  will-change: transform;
+  filter: drop-shadow(0 14px 18px rgba(12, 42, 51, 0.22));
+}
+.surfer-bob { animation: surfer-bob 2.8s ease-in-out infinite; transform-origin: 90px 90px; }
+@keyframes surfer-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(-2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .surfer-bob { animation: none; }
+}

@@ -22,3 +22,11 @@ document.querySelector("#year")!.textContent = String(new Date().getFullYear());
 
 import { renderSkills } from "./skills";
 renderSkills(document.querySelector("#skill-strip")!);
+
+if (wantsMotion && window.matchMedia("(min-width: 860px)").matches) {
+  import("./surfer").then(({ mountSurfer }) => {
+    const highlights = Array.from(document.querySelectorAll<HTMLElement>(".highlight"));
+    const archive = document.querySelector<HTMLElement>(".archive")!;
+    mountSurfer(highlights, archive);
+  });
+}
