@@ -1,4 +1,4 @@
-import { siExpo, siNodedotjs, siPostgresql, siReact, siSupabase, siThreedotjs, siTypescript } from "simple-icons";
+import { siExpo, siNodedotjs, siPostgresql, siPython, siReact, siSupabase, siTypescript } from "simple-icons";
 
 const skills = [
   { name: "TypeScript", icon: siTypescript },
@@ -7,7 +7,7 @@ const skills = [
   { name: "Node.js", icon: siNodedotjs },
   { name: "Supabase", icon: siSupabase },
   { name: "PostgreSQL", icon: siPostgresql },
-  { name: "Three.js", icon: siThreedotjs },
+  { name: "Python", icon: siPython },
 ];
 
 export function renderSkills(list: HTMLElement): void {
