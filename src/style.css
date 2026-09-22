@@ -106,7 +106,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 main { padding: 0 var(--gutter); position: relative; z-index: 2; }
 
-section { padding: clamp(72px, 10vw, 140px) 0; border-top: 1px solid var(--line); }
+section { padding: clamp(72px, 10vw, 140px) 0; }
 section:first-child { border-top: 0; }
 
 h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px); max-width: 24ch; }
