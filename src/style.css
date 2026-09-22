@@ -315,9 +315,18 @@ h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px);
 }
 
 @media (max-width: 767px) {
-  .hero-copy { text-align: center; padding-bottom: clamp(70px, 9vw, 140px); }
+  .hero-copy {
+    text-align: center;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: clamp(70px, 9vw, 140px);
+  }
   .hero-copy h1 { margin: 0 auto; }
-  .hero-mobile { display: flex; flex-direction: column; align-items: center; gap: 22px; margin-top: 40px; }
+  .hero-mobile { display: flex; flex-direction: column; align-items: center; gap: 22px; margin-top: 44px; }
+  .scroll-cue { margin-top: 18px; }
   .mobile-surfer { width: 150px; height: 108px; }
   .mobile-surfer svg { width: 100%; height: 100%; filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.35)); }
   .mobile-surfer-bob { animation: surfer-bob 2.8s ease-in-out infinite; transform-origin: 90px 90px; }
