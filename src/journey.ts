@@ -149,13 +149,13 @@ export function mountJourney(highlights: HTMLElement[], hero: HTMLElement, exitA
     const maxScroll = document.documentElement.scrollHeight - vh;
     endScroll = Math.min(exitTop - vh * 0.1, maxScroll - 40);
     const points: Waypoint[] = [
-      { x: vw * 0.62, y: heroBottom + 24 },
-      { x: docks[0].x + 40, y: heroBottom + (docks[0].y - heroBottom) * 0.35 },
+      { x: vw * 0.6, y: heroBottom - 40 },
+      { x: vw * 0.42, y: heroBottom + 60 },
     ];
     docks.forEach((d, i) => {
       const flipped = highlights[i].classList.contains("highlight-flip");
       const side = flipped ? -1 : 1;
-      points.push({ x: d.x - side * 10, y: d.y - 240 });
+      points.push({ x: d.x - side * 10, y: i === 0 ? Math.max(d.y - 240, heroBottom + 80) : d.y - 240 });
       points.push(d);
       points.push({ x: d.x + side * 70, y: d.y + 300 });
       const next = docks[i + 1];
