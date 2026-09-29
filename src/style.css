@@ -221,6 +221,7 @@ h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px);
 .experience-points li { position: relative; padding-left: 22px; }
 .experience-points li::before { content: ""; position: absolute; left: 0; top: 0.8em; width: 10px; height: 2px; background: var(--accent); }
 .experience-card .stack { margin-bottom: 0; }
+.experience-card .note { display: block; margin-top: 14px; }
 
 .stack { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 24px 0; font-size: 14px; font-weight: 600; }
 .stack li { padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--sand); }

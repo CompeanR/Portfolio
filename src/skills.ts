@@ -1,4 +1,4 @@
-import { type SimpleIcon, siExpo, siNodedotjs, siPhp, siPostgresql, siPython, siReact, siSupabase, siTypescript } from "simple-icons";
+import { type SimpleIcon, siExpo, siGo, siNodedotjs, siPhp, siPostgresql, siPython, siReact, siSupabase, siTypescript } from "simple-icons";
 
 const skills: { name: string; icon?: SimpleIcon }[] = [
   { name: "TypeScript", icon: siTypescript },
@@ -7,6 +7,8 @@ const skills: { name: string; icon?: SimpleIcon }[] = [
   { name: "PostgreSQL", icon: siPostgresql },
   { name: "PHP", icon: siPhp },
   { name: "AWS" },
+  { name: "PowerShell" },
+  { name: "Go", icon: siGo },
   { name: "Supabase", icon: siSupabase },
   { name: "Python", icon: siPython },
   { name: "React Native / Expo", icon: siExpo },
