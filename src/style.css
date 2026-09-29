@@ -433,8 +433,10 @@ html.ride .skill-strip {
 }
 html.ride .archive { padding-top: calc(var(--window) * 0.6); }
 html.ride .experience-card { margin-top: var(--window); }
-html.ride .postcard .stamp, html.ride .postcard .postmark { display: none; }
 html.ride .highlight[data-stop] { padding-top: var(--window); }
+html.ride #experience > h2, html.ride #work > h2 { margin-top: var(--window); }
+html.ride h2 + .experience-card { margin-top: 0; }
+html.ride h2 + .highlight[data-stop] { padding-top: 0; }
 
 html.ride .postcard,
 html.ride .note-card,
@@ -480,7 +482,7 @@ html.ride .postcard .stack li { background: color-mix(in srgb, var(--accent) 12%
 }
 
 html.ride .highlight {
-  --phone: clamp(96px, 11vw, 150px);
+  --phone: clamp(170px, 15vw, 230px);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 0;
@@ -493,10 +495,8 @@ html.ride .highlight-media {
   width: var(--phone);
   min-height: 0;
   padding: 0;
-  translate: 30% -42%;
-  animation: phone-bob 6s ease-in-out infinite;
+  translate: 88% -12%;
 }
-@keyframes phone-bob { 50% { transform: translateY(-5px) rotate(-0.6deg); } }
 html.ride .highlight-media .phone {
   width: 100%;
   padding: 5px;
@@ -504,8 +504,6 @@ html.ride .highlight-media .phone {
   box-shadow: 0 24px 40px -18px rgba(12, 42, 51, 0.6);
 }
 html.ride .phone-back, html.ride .highlight .stamp, html.ride .highlight .postmark { display: none; }
-html.ride .highlight .postcard > h3,
-html.ride .highlight .highlight-lede { padding-right: calc(var(--phone) * 0.7 + 16px); }
 
 html.ride .hero-copy h1,
 html.ride .contact h2,
@@ -531,8 +529,8 @@ html.ride .contact {
 @media (max-width: 767px) {
   html.ride { --window: 24svh; }
   html.ride .highlight { display: flex; flex-direction: column; }
-  html.ride .highlight-media { order: -1; translate: none; animation: none; align-self: flex-end; justify-self: auto; width: 96px; margin: 0 18px -60px 0; rotate: 4deg; position: relative; }
-  html.ride .highlight .postcard > h3 { padding-right: 84px; }
+  html.ride .highlight-media { order: -1; translate: none; align-self: flex-end; justify-self: auto; width: 150px; margin: 0 18px -48px 0; rotate: 3deg; position: relative; }
+  html.ride .highlight .postcard > h3 { padding-right: 140px; }
   html.ride .highlight .highlight-lede { padding-right: 0; }
   html.ride .skill-strip { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); padding: 24px 20px; }
   html.ride .contact { padding-bottom: 54svh; }
