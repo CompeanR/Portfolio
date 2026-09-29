@@ -1,20 +1,22 @@
-import { siExpo, siNodedotjs, siPostgresql, siPython, siReact, siSupabase, siTypescript } from "simple-icons";
+import { type SimpleIcon, siExpo, siNodedotjs, siPhp, siPostgresql, siPython, siReact, siSupabase, siTypescript } from "simple-icons";
 
-const skills = [
+const skills: { name: string; icon?: SimpleIcon }[] = [
   { name: "TypeScript", icon: siTypescript },
-  { name: "React Native / Expo", icon: siExpo },
   { name: "React", icon: siReact },
   { name: "Node.js", icon: siNodedotjs },
-  { name: "Supabase", icon: siSupabase },
   { name: "PostgreSQL", icon: siPostgresql },
+  { name: "PHP", icon: siPhp },
+  { name: "AWS" },
+  { name: "Supabase", icon: siSupabase },
   { name: "Python", icon: siPython },
+  { name: "React Native / Expo", icon: siExpo },
 ];
 
 export function renderSkills(list: HTMLElement): void {
   list.innerHTML = skills
     .map(
       ({ name, icon }) => `<li>
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="${icon.path}" fill="currentColor"/></svg>
+        ${icon ? `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="${icon.path}" fill="currentColor"/></svg>` : ""}
         <span>${name}</span>
       </li>`,
     )

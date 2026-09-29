@@ -202,7 +202,7 @@ h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px);
 .postcard .highlight-lede { color: var(--accent); }
 .postcard .stack li { background: transparent; border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
 .postcard .link { color: var(--accent); }
-.highlight-copy h3 { font-size: clamp(30px, 3vw, 40px); }
+.highlight-copy h3, .experience-card h3 { font-size: clamp(30px, 3vw, 40px); }
 .highlight-lede {
   font-family: var(--display);
   font-variation-settings: "SOFT" 50, "opsz" 24;
@@ -211,7 +211,16 @@ h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px);
   color: var(--teal-deep);
   margin: 14px 0 22px;
 }
-.highlight-copy p { margin: 0 0 16px; color: var(--ink-soft); }
+.highlight-copy p, .experience-card p { margin: 0 0 16px; color: var(--ink-soft); }
+
+.experience { padding-bottom: 0; }
+.experience-card { max-width: 860px; }
+.experience-card .experience-meta { margin: 6px 0 0; font-size: 14px; font-weight: 600; }
+.experience-card .highlight-lede { margin: 14px 0 22px; }
+.experience-points { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 36px; margin: 0 0 20px; color: var(--ink-soft); }
+.experience-points li { position: relative; padding-left: 22px; }
+.experience-points li::before { content: ""; position: absolute; left: 0; top: 0.8em; width: 10px; height: 2px; background: var(--accent); }
+.experience-card .stack { margin-bottom: 0; }
 
 .stack { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 24px 0; font-size: 14px; font-weight: 600; }
 .stack li { padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--sand); }
@@ -312,6 +321,8 @@ h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px);
   .phone { width: 210px; }
   .phone-back { display: none; }
   .archive-list li { grid-template-columns: 1fr; gap: 2px; }
+  .experience-card .experience-meta { padding-right: 90px; }
+  .experience-points { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 767px) {
