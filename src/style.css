@@ -337,7 +337,9 @@ h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px);
 }
 
 @media (max-width: 480px) {
-  .topbar-links { gap: 18px; }
+  .topbar { padding: 20px var(--gutter); gap: 12px; }
+  .wordmark { font-size: 17px; white-space: nowrap; }
+  .topbar-links { gap: 14px; font-size: 14px; }
   .hero-copy { max-width: none; }
 }
 
@@ -371,7 +373,17 @@ h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: clamp(40px, 5vw, 72px);
 html.ride {
   --window: 24svh;
 }
-html.ride body { background: linear-gradient(180deg, #0c2a33 0%, #0f5468 60%, #0b4558 100%) fixed; }
+html.ride body { background: linear-gradient(180deg, #163f5a, #2f6f84 55%, #0b3f52) fixed; }
+html.ride body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(12, 42, 51, 0.35), transparent 110px),
+    radial-gradient(120% 90% at 20% 50%, rgba(12, 42, 51, 0.3), transparent 65%);
+}
 html.ride #world {
   display: block;
   position: fixed;
@@ -385,33 +397,157 @@ html.ride #world {
 }
 html.ride #world.is-live { opacity: 1; }
 
+html.ride .hero::after, html.ride .contact::after { content: none; }
 html.ride .hero,
 html.ride .contact { position: relative; z-index: 1; background: transparent; }
-html.ride main { z-index: 1; }
+html.ride main { z-index: 1; overflow-x: clip; }
 html.ride .shore, html.ride .mobile-surfer { display: none; }
 
-html.ride main h2 {
-  display: inline-block;
-  background: var(--paper);
-  padding: 6px 14px;
-  border-radius: 4px;
+html.ride main > section > h2 {
+  display: block;
+  max-width: 22ch;
+  margin: 0 0 24px;
+  font-size: clamp(30px, 3.6vw, 48px);
+  text-wrap: balance;
+  color: var(--sand);
+  background: none;
+  padding: 0;
+  line-height: 1.42;
 }
+html.ride main > section > h2 > span {
+  background: rgba(12, 42, 51, 0.68);
+  padding: 0.06em 0.4em 0.1em;
+  border-radius: 0.4em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  text-shadow: none;
+}
+
 html.ride .skills {
   margin-top: var(--window);
-  padding: 32px 36px;
-  background: #fbf2e1;
-  border: 1px solid #eadfc8;
-  border-radius: 4px;
-  box-shadow: 0 26px 40px -30px rgba(12, 42, 51, 0.4);
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
 }
-html.ride .skills h2 { padding: 0; background: none; }
+html.ride .skills .tide { display: none; }
+html.ride .skill-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px 24px;
+  padding: 28px 32px;
+  margin-top: 20px;
+}
+html.ride .archive { padding-top: calc(var(--window) * 0.6); }
 html.ride .experience-card { margin-top: var(--window); }
+html.ride .postcard .stamp, html.ride .postcard .postmark { display: none; }
 html.ride .highlight[data-stop] { padding-top: var(--window); }
-html.ride .contact { min-height: 100svh; padding-top: var(--window); }
+
+html.ride .postcard,
+html.ride .note-card,
+html.ride .skill-strip {
+  background: #fbf2e1;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  outline: none;
+  transform: none;
+  position: relative;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 6px rgba(12, 42, 51, 0.14), 0 40px 70px -32px rgba(12, 42, 51, 0.6);
+}
+html.ride .postcard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  width: 56px;
+  height: 4px;
+  border-radius: 0 0 4px 4px;
+  background: var(--accent, var(--amber));
+}
+html.ride .postcard::after,
+html.ride .note-card::after,
+html.ride .skill-strip::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -34px;
+  height: 34px;
+  background: radial-gradient(50% 100% at 50% 0, rgba(12, 42, 51, 0.28), transparent 70%);
+  pointer-events: none;
+}
+html.ride .postcard .stack li { background: color-mix(in srgb, var(--accent) 12%, transparent); border-color: transparent; }
+@supports (animation-timeline: view()) {
+  html.ride .postcard, html.ride .note-card, html.ride .skill-strip {
+    animation: surface linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 20%;
+  }
+  @keyframes surface { from { opacity: 0.6; transform: translateY(14px); } }
+}
+
+html.ride .highlight {
+  --phone: clamp(96px, 11vw, 150px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+html.ride .highlight > * { grid-area: 1 / 1; }
+html.ride .highlight-media {
+  z-index: 2;
+  align-self: start;
+  justify-self: end;
+  width: var(--phone);
+  min-height: 0;
+  padding: 0;
+  translate: 30% -42%;
+  animation: phone-bob 6s ease-in-out infinite;
+}
+@keyframes phone-bob { 50% { transform: translateY(-5px) rotate(-0.6deg); } }
+html.ride .highlight-media .phone {
+  width: 100%;
+  padding: 5px;
+  border-radius: calc(var(--phone) * 0.15);
+  box-shadow: 0 24px 40px -18px rgba(12, 42, 51, 0.6);
+}
+html.ride .phone-back, html.ride .highlight .stamp, html.ride .highlight .postmark { display: none; }
+html.ride .highlight .postcard > h3,
+html.ride .highlight .highlight-lede { padding-right: calc(var(--phone) * 0.7 + 16px); }
+
+html.ride .hero-copy h1,
+html.ride .contact h2,
+html.ride .contact p,
+html.ride .contact-links a { text-shadow: 0 1px 2px rgba(12, 42, 51, 0.35), 0 2px 22px rgba(12, 42, 51, 0.45); }
+html.ride .contact p { font-weight: 500; color: rgba(255, 244, 226, 0.92); }
+
+html.ride .contact {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: var(--window);
+  padding-bottom: 30svh;
+}
+
+@media (max-width: 1023px) {
+  html.ride body::after {
+    background: radial-gradient(140% 60% at 50% 38%, rgba(12, 42, 51, 0.28), transparent 70%);
+  }
+}
 
 @media (max-width: 767px) {
-  html.ride { --window: 40svh; }
-  html.ride .skills { padding: 24px 20px; }
+  html.ride { --window: 24svh; }
+  html.ride .highlight { display: flex; flex-direction: column; }
+  html.ride .highlight-media { order: -1; translate: none; animation: none; align-self: flex-end; justify-self: auto; width: 96px; margin: 0 18px -60px 0; rotate: 4deg; position: relative; }
+  html.ride .highlight .postcard > h3 { padding-right: 84px; }
+  html.ride .highlight .highlight-lede { padding-right: 0; }
+  html.ride .skill-strip { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); padding: 24px 20px; }
+  html.ride .contact { padding-bottom: 54svh; }
+  html.ride .contact-links { display: grid; grid-template-columns: repeat(2, auto); justify-content: start; gap: 12px 28px; }
+  html.ride .hero-copy { padding-bottom: 30svh; }
+  html.ride .postcard h3 { font-size: clamp(24px, 7vw, 30px); line-height: 1.12; text-wrap: balance; }
+  html.ride .postcard .stamp { width: 52px; height: 52px; top: 14px; right: 14px; }
+  html.ride .experience-meta { text-wrap: balance; }
 }
 
 @media (min-width: 1024px) {
@@ -419,16 +555,28 @@ html.ride .contact { min-height: 100svh; padding-top: var(--window); }
   html.ride .contact > *,
   html.ride .skills { max-width: min(680px, 56vw); margin-right: auto; }
   html.ride .experience-card { max-width: min(680px, 56vw); }
-  html.ride .highlight { grid-template-columns: 1fr; gap: 24px; }
-  html.ride .highlight-flip .highlight-media { order: 0; }
-  html.ride .highlight-media { min-height: 0; justify-content: flex-start; padding-bottom: 40px; }
-  html.ride .phone { width: 210px; }
-  html.ride .phone-back { display: none; }
   html.ride .experience-points { grid-template-columns: 1fr; }
 }
 
 @media print {
-  #world, .wave-toggle { display: none !important; }
+  #world, .wave-toggle, html.ride body::after { display: none !important; }
   html.ride body { background: var(--paper); }
   html.ride .hero, html.ride .contact { background: #0c2a33; }
+}
+
+html.ride .contact-links { gap: 14px 28px; }
+html.ride .contact-links a { font-size: clamp(24px, 2.4vw, 34px); }
+
+html.ride .contact h2 { font-size: clamp(44px, 6vw, 84px); }
+html.ride .contact-links a { text-shadow: none; }
+html.ride .contact-links {
+  padding: 16px 22px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(12, 42, 51, 0.45), rgba(12, 42, 51, 0.15));
+  width: fit-content;
+  max-width: 100%;
+}
+html.ride .contact-links a:first-child { color: var(--amber); }
+@media (max-width: 767px) {
+  html.ride .contact { padding-bottom: 46svh; }
 }

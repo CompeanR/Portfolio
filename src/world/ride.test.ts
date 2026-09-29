@@ -2,7 +2,8 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { SWELL, SWELL_GLSL, swellAt } from "./swell";
-import { STOPS, createPath, holdsFrom, mergeStops, moodAt, pathAt, progressAt, shotAt, tierFor } from "./ride";
+import { Color, PerspectiveCamera, Vector3 } from "three";
+import { STOPS, createPath, framingFor, holdsFrom, mergeStops, moodAt, pathAt, progressAt, shotAt, shotPose, tierFor } from "./ride";
 
 const VH = 800;
 const rects = [
@@ -94,6 +95,53 @@ describe("shots and moods", () => {
   });
 });
 
+describe("moods", () => {
+  it("keep the sea saturated and the deep water darker", () => {
+    for (const stop of STOPS) {
+      const shallow = new Color(stop.mood.seaShallow).getHSL({ h: 0, s: 0, l: 0 });
+      const deep = new Color(stop.mood.seaDeep).getHSL({ h: 0, s: 0, l: 0 });
+      expect(shallow.s).toBeGreaterThanOrEqual(0.35);
+      expect(deep.l).toBeLessThan(shallow.l);
+    }
+  });
+});
+
+describe("framing", () => {
+  const curve = createPath();
+  const measure = (w: number, h: number, i: number) => {
+    const out = { position: new Vector3(), target: new Vector3(), fov: 0 };
+    shotPose(curve, i, w / h, out);
+    const camera = new PerspectiveCamera(out.fov, w / h, 0.1, 200);
+    camera.position.copy(out.position);
+    camera.lookAt(out.target);
+    const f = framingFor(w, h);
+    camera.setViewOffset(w, h, -(f.x - 0.5) * w, -(f.y - 0.5) * h, w, h);
+    camera.updateMatrixWorld();
+    const feet = pathAt(curve, i);
+    const a = feet.clone().project(camera);
+    const b = feet.clone().add(new Vector3(0, 1.6, 0)).project(camera);
+    return { height: Math.abs(b.y - a.y) / 2, centerY: 1 - ((a.y + b.y) / 4 + 0.5) };
+  };
+
+  it("keeps the surfer 17-30% of the desktop frame on ride stops", () => {
+    for (let i = 1; i <= 6; i++) {
+      const { height } = measure(1440, 900, i);
+      expect(height).toBeGreaterThanOrEqual(0.17);
+      expect(height).toBeLessThanOrEqual(0.3);
+    }
+  });
+
+  it("keeps the surfer 10-19% of the phone frame, low in the frame", () => {
+    STOPS.forEach((_, i) => {
+      const { height, centerY } = measure(390, 844, i);
+      expect(height).toBeGreaterThanOrEqual(0.1);
+      expect(height).toBeLessThanOrEqual(0.19);
+      expect(centerY).toBeGreaterThanOrEqual(0.74);
+      expect(centerY).toBeLessThanOrEqual(0.86);
+    });
+  });
+});
+
 describe("path", () => {
   it("passes through each stop", () => {
     const curve = createPath();
@@ -141,5 +189,13 @@ describe("index.html", () => {
       "contact",
     ]);
     expect([...new Set(ids)]).toEqual(STOPS.map((s) => s.id));
+  });
+
+  it("wraps section titles in a span", () => {
+    const html = readFileSync(new URL("../../index.html", import.meta.url), "utf8");
+    const main = html.slice(html.indexOf("<main>"), html.indexOf("</main>"));
+    const h2s = [...main.matchAll(/<h2>(.*?)<\/h2>/g)].map((m) => m[1]);
+    expect(h2s).toHaveLength(4);
+    for (const h of h2s) expect(h).toMatch(/^<span>[^<]+<\/span>$/);
   });
 });
