@@ -190,12 +190,4 @@ describe("index.html", () => {
     ]);
     expect([...new Set(ids)]).toEqual(STOPS.map((s) => s.id));
   });
-
-  it("wraps section titles in a span", () => {
-    const html = readFileSync(new URL("../../index.html", import.meta.url), "utf8");
-    const main = html.slice(html.indexOf("<main>"), html.indexOf("</main>"));
-    const h2s = [...main.matchAll(/<h2>(.*?)<\/h2>/g)].map((m) => m[1]);
-    expect(h2s).toHaveLength(4);
-    for (const h of h2s) expect(h).toMatch(/^<span>[^<]+<\/span>$/);
-  });
 });

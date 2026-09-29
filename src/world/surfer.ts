@@ -43,6 +43,7 @@ const HIP = new Vector3(0.1, -0.04, 0);
 const PALETTE = {
   skin: 0xc98a5e,
   hair: 0x2a1a14,
+  shirt: 0x151515,
   amber: 0xf5a31a,
   sand: 0xfff4e2,
   shorts: 0x173a66,
@@ -328,14 +329,14 @@ export function createSurfer({ low = false }: { low?: boolean } = {}) {
   const profile = [[0, -0.02], [0.12, 0], [0.12, 0.12], [0.14, 0.3], [0.15, 0.42], [0.14, 0.5], [0.08, 0.55], [0, 0.56]].map(([r, y]) => new Vector2(r, y));
   const torsoMesh = mesh(
     merge([
-      part(new LatheGeometry(profile, 12), PALETTE.amber, scaled(1, 1, 0.72)),
+      part(new LatheGeometry(profile, 12), PALETTE.shirt, scaled(1, 1, 0.72)),
       part(new TorusGeometry(0.085, 0.02, 6, 12), PALETTE.sand, at(0, 0.55, 0).multiply(rotX)),
     ]),
   );
   torso.add(torsoMesh);
   pelvis.add(torso);
 
-  const upperGeo = merge([part(limb(0.075, 0.062, 0.25, seg), PALETTE.amber), part(new SphereGeometry(0.075, 8, 6), PALETTE.amber), part(new TorusGeometry(0.06, 0.014, 6, 10), PALETTE.rust, at(0, -0.23, 0).multiply(rotX.clone()))]);
+  const upperGeo = merge([part(limb(0.075, 0.062, 0.25, seg), PALETTE.shirt), part(new SphereGeometry(0.075, 8, 6), PALETTE.shirt), part(new TorusGeometry(0.06, 0.014, 6, 10), PALETTE.rust, at(0, -0.23, 0).multiply(rotX.clone()))]);
   const foreGeo = merge([part(limb(0.06, 0.048, 0.23, seg), PALETTE.skin), part(new SphereGeometry(0.058, 8, 6), PALETTE.skin), part(new SphereGeometry(0.055, 8, 6), PALETTE.skin, scaled(1, 1.3, 0.7, at(0, -0.29, 0)))]);
   const makeArm = (side: 1 | -1) => {
     const shoulder = group(side * 0.19, 0.46, 0);
@@ -359,7 +360,6 @@ export function createSurfer({ low = false }: { low?: boolean } = {}) {
         part(new SphereGeometry(0.1, 10, 8), PALETTE.skin, at(0, 0.14, 0.02).multiply(scaled(1, 0.8, 0.9))),
         part(new SphereGeometry(0.16, 14, 8, 0, Math.PI * 2, 0, 0.5 * Math.PI), PALETTE.hair, at(0, 0.21, 0).multiply(new Matrix4().makeRotationX(-0.6))),
         part(new SphereGeometry(0.06, 8, 6), PALETTE.skin, at(0, 0.27, 0.11).multiply(scaled(1.5, 0.7, 0.8))),
-        part(new SphereGeometry(0.07, 8, 6), PALETTE.hair, at(0, 0.31, -0.06).multiply(scaled(1.2, 0.8, 1.3))),
         part(new SphereGeometry(0.03, 6, 4), PALETTE.skin, at(0.15, 0.2, 0).multiply(scaled(0.5, 1, 0.8))),
         part(new SphereGeometry(0.03, 6, 4), PALETTE.skin, at(-0.15, 0.2, 0).multiply(scaled(0.5, 1, 0.8))),
         part(new SphereGeometry(0.028, 6, 4), PALETTE.skin, at(0, 0.19, 0.15)),
