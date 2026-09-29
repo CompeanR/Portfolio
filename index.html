@@ -22,11 +22,12 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,50;1,9..144,400..700,50&family=Manrope:wght@400..800&display=swap"
       rel="stylesheet"
     />
+    <script>if(matchMedia("(prefers-reduced-motion: no-preference)").matches&&!!document.createElement("canvas").getContext("webgl2")&&!navigator.connection?.saveData&&!/[?&]static\b/.test(location.search)&&sessionStorage.getItem("world-off")!=="1")document.documentElement.classList.add("ride")</script>
   </head>
   <body>
+    <canvas id="world" aria-hidden="true"></canvas>
     <a class="skip-link" href="#experience">Skip to content</a>
     <header class="hero" data-stop="hero">
-      <canvas id="scene" aria-hidden="true"></canvas>
       <nav class="topbar">
         <a href="/" class="wordmark">Javier Compean</a>
         <div class="topbar-links">
@@ -460,8 +461,6 @@
     </main>
 
     <section id="contact" class="contact" data-stop="contact">
-      <canvas id="sea" aria-hidden="true"></canvas>
-      <div class="sunset" aria-hidden="true"></div>
       <svg
         class="shore"
         viewBox="0 0 1440 160"

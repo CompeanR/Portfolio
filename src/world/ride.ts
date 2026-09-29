@@ -143,6 +143,7 @@ export function moodAt(P: number): Mood {
   };
 }
 
+export type Tier = ReturnType<typeof tierFor>;
 export type TierInput = { width: number; dpr: number; coarse?: boolean; cores?: number; memory?: number };
 
 export function tierFor({ width, dpr, coarse = false, cores = 8, memory = 8 }: TierInput) {

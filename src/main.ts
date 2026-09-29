@@ -1,56 +1,49 @@
 import "./style.css";
 import { renderSkills } from "./skills";
+import type { World } from "./world/world";
 
-const canvas = document.querySelector<HTMLCanvasElement>("#scene");
-const sea = document.querySelector<HTMLCanvasElement>("#sea");
+const root = document.documentElement;
+const canvas = document.querySelector<HTMLCanvasElement>("#world")!;
 const motionOk = window.matchMedia("(prefers-reduced-motion: no-preference)");
-const wideEnoughForSea = window.matchMedia("(min-width: 768px)");
-const wideEnoughForJourney = window.matchMedia("(min-width: 860px)");
 
-let unmountSea: (() => void) | null = null;
-let unmountJourney: (() => void) | null = null;
+if (location.hash && root.classList.contains("ride")) {
+  root.style.scrollBehavior = "auto";
+  document.querySelector(location.hash)?.scrollIntoView();
+  root.style.scrollBehavior = "";
+}
 
-const reconcile = () => {
-  const wantSea = motionOk.matches && wideEnoughForSea.matches && canvas;
-  const wantJourney = motionOk.matches && wideEnoughForJourney.matches;
+let world: World | null = null;
+let unmounted = false;
 
-  if (wantSea && !unmountSea) {
-    unmountSea = () => {};
-    import("./scene").then(({ mountScene }) => {
-      if (!unmountSea) return;
-      const stopHero = mountScene(canvas);
-      canvas.classList.add("is-live");
-      const stopSea = sea ? mountScene(sea, { mood: "dusk" }) : () => {};
-      sea?.classList.add("is-live");
-      unmountSea = () => {
-        stopHero();
-        stopSea();
-        canvas.classList.remove("is-live");
-        sea?.classList.remove("is-live");
-      };
-    });
-  } else if (!wantSea && unmountSea) {
-    unmountSea();
-    unmountSea = null;
-  }
-
-  if (wantJourney && !unmountJourney) {
-    unmountJourney = () => {};
-    import("./journey").then(({ mountJourney }) => {
-      if (!unmountJourney) return;
-      const highlights = Array.from(document.querySelectorAll<HTMLElement>(".highlight"));
-      const hero = document.querySelector<HTMLElement>(".hero")!;
-      const contact = document.querySelector<HTMLElement>("#contact")!;
-      unmountJourney = mountJourney(highlights, hero, contact);
-    });
-  } else if (!wantJourney && unmountJourney) {
-    unmountJourney();
-    unmountJourney = null;
-  }
+const failWorld = () => {
+  unmounted = true;
+  world?.dispose();
+  world = null;
+  sessionStorage.setItem("world-off", "1");
+  canvas.classList.remove("is-live");
+  root.classList.remove("ride");
 };
 
-reconcile();
-for (const mq of [motionOk, wideEnoughForSea, wideEnoughForJourney]) mq.addEventListener("change", reconcile);
+const startWorld = async () => {
+  const { mountWorld } = await import("./world/world");
+  if (unmounted) return;
+  world = mountWorld(canvas, { onFail: failWorld });
+  if (!world) failWorld();
+};
+
+if (root.classList.contains("ride")) {
+  const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
+  idle(startWorld, { timeout: 1500 });
+
+  motionOk.addEventListener("change", () => {
+    if (motionOk.matches) return;
+    unmounted = true;
+    world?.dispose();
+    world = null;
+    canvas.classList.remove("is-live");
+    root.classList.remove("ride");
+  });
+}
 
 document.querySelector<HTMLAnchorElement>("[data-email]")?.addEventListener("click", (e) => {
   const a = e.currentTarget as HTMLAnchorElement;
