@@ -24,7 +24,8 @@
     />
   </head>
   <body>
-    <header class="hero">
+    <a class="skip-link" href="#experience">Skip to content</a>
+    <header class="hero" data-stop="hero">
       <canvas id="scene" aria-hidden="true"></canvas>
       <nav class="topbar">
         <a href="/" class="wordmark">Javier Compean</a>
@@ -38,8 +39,8 @@
       </nav>
       <div class="hero-copy">
         <h1>Creating Functional Software Products</h1>
-        <div class="hero-mobile" aria-hidden="true">
-          <div class="mobile-surfer"><svg viewBox="0 0 180 130" width="180" height="130" aria-hidden="true">
+        <div class="hero-mobile">
+          <div class="mobile-surfer" aria-hidden="true"><svg viewBox="0 0 180 130" width="180" height="130" aria-hidden="true">
   <g class="surfer-bob mobile-surfer-bob">
     <path d="M120 78 C 128 76, 134 76, 138 80 C 132 82, 128 88, 126 96 C 124 88, 122 82, 120 78 Z" fill="#fff4e2" opacity="0.85"/>
     <g transform="rotate(-16 96 84)">
@@ -82,7 +83,7 @@
       <section id="experience" class="experience">
         <h2>Where I've worked</h2>
 
-        <article class="postcard experience-card" style="--accent: #94690a">
+        <article class="postcard experience-card" data-stop="pemex" style="--accent: #94690a">
           <svg class="postmark" viewBox="0 0 90 40" aria-hidden="true">
             <circle
               cx="20"
@@ -142,7 +143,7 @@
           <span class="note">Internal tool, private.</span>
         </article>
 
-        <article class="postcard experience-card" style="--accent: #1f4e8c">
+        <article class="postcard experience-card" data-stop="remine" style="--accent: #1f4e8c">
           <svg class="postmark" viewBox="0 0 90 40" aria-hidden="true">
             <circle
               cx="20"
@@ -208,7 +209,7 @@
       <section id="work" class="work">
         <h2>Three things I built on the side this year</h2>
 
-        <article class="highlight" style="--accent: #b7131a">
+        <article class="highlight" data-stop="verseguard" style="--accent: #b7131a">
           <div class="highlight-media">
             <div class="phone">
               <img
@@ -277,7 +278,7 @@
           </div>
         </article>
 
-        <article class="highlight highlight-flip" style="--accent: #b23a0b">
+        <article class="highlight highlight-flip" data-stop="puertoloqueron" style="--accent: #b23a0b">
           <div class="highlight-media">
             <div class="phone">
               <img
@@ -342,7 +343,7 @@
           </div>
         </article>
 
-        <article class="highlight" style="--accent: #1f9d6a">
+        <article class="highlight" data-stop="recibidor" style="--accent: #1f9d6a">
           <div class="highlight-media">
             <div class="phone phone-dark">
               <img
@@ -408,13 +409,13 @@
         </article>
       </section>
 
-      <section class="skills" aria-label="Tools I use">
+      <section class="skills" data-stop="earlier" aria-label="Tools I use">
         <h2>What I work with</h2>
         <span class="tide" aria-hidden="true"></span>
         <ul class="skill-strip" id="skill-strip"></ul>
       </section>
 
-      <section class="archive">
+      <section class="archive" data-stop="earlier">
         <h2>Earlier work</h2>
         <div class="note-card">
           <p>
@@ -458,7 +459,7 @@
       </section>
     </main>
 
-    <section id="contact" class="contact">
+    <section id="contact" class="contact" data-stop="contact">
       <canvas id="sea" aria-hidden="true"></canvas>
       <div class="sunset" aria-hidden="true"></div>
       <svg
